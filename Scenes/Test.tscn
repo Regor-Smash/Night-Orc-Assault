@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bn33o2eu8bsdt"]
+
+[ext_resource type="PackedScene" uid="uid://4t2o30kevc0o" path="res://Prefabs/Player.tscn" id="1_q6qud"]
+[ext_resource type="Texture2D" uid="uid://bgv7ytb2v5k2x" path="res://Art/Tropic Island Tileset_Collectable - Gem.png" id="2_fm6ps"]
+[ext_resource type="PackedScene" uid="uid://fm6sqxwohdnq" path="res://Prefabs/Star.tscn" id="3_6ln20"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("1_q6qud")]
+position = Vector2(244, -53)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_fm6ps")
+
+[node name="StaticBody2D" parent="." instance=ExtResource("3_6ln20")]
+position = Vector2(-4, -214)
+
+[node name="StaticBody2D2" parent="." instance=ExtResource("3_6ln20")]
+position = Vector2(149, 261)

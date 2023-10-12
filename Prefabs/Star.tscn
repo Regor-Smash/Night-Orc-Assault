@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://fm6sqxwohdnq"]
+
+[ext_resource type="Texture2D" uid="uid://bfsr1yxbkts8p" path="res://Art/Tropic Island Tileset_Collectable - Star.png" id="1_b54c2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ov2sw"]
+radius = 59.0339
+
+[node name="StaticBody2D" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_b54c2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 5)
+shape = SubResource("CircleShape2D_ov2sw")
