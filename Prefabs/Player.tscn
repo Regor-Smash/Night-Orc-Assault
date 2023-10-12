@@ -1,14 +1,14 @@
 [gd_scene load_steps=5 format=3 uid="uid://4t2o30kevc0o"]
 
-[ext_resource type="Script" path="res://Scripts/PlayerMove.cs" id="1_8w2wc"]
 [ext_resource type="Texture2D" uid="uid://6ejhqw6gp5v6" path="res://Art/Top Down Swordsman.png" id="1_hbe7w"]
-[ext_resource type="Script" path="res://Scripts/PlayerLook.cs" id="3_cm4n3"]
+[ext_resource type="Script" path="res://Scripts/Player/PlayerMove.cs" id="1_shvxo"]
+[ext_resource type="Script" path="res://Scripts/Player/PlayerLook.cs" id="2_lmrn6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f47xg"]
 radius = 89.0505
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
-script = ExtResource("1_8w2wc")
+[node name="PlayerBody" type="CharacterBody2D"]
+script = ExtResource("1_shvxo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_f47xg")
@@ -16,7 +16,7 @@ shape = SubResource("CircleShape2D_f47xg")
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Node2D" type="Node2D" parent="."]
-script = ExtResource("3_cm4n3")
+script = ExtResource("2_lmrn6")
 
 [node name="Sprite2D" type="Sprite2D" parent="Node2D"]
 position = Vector2(65, 0)
