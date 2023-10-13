@@ -3,8 +3,9 @@ using System;
 
 public partial class PlayerMove : CharacterBody2D
 {
+	[ExportCategory("Stats")]
 	[Export]
-	private const float Speed = 300.0f;
+	private float speed = 400f;
 
 	public static PlayerMove Instance { get; private set; }
 
@@ -34,7 +35,7 @@ public partial class PlayerMove : CharacterBody2D
 		if (direction != Vector2.Zero)
 		{
 			//If moving, set velocity
-			newVelocity = direction * Speed;
+			newVelocity = direction * speed;
 		}
 
 		this.Velocity = newVelocity;

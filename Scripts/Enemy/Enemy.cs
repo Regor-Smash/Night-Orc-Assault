@@ -1,13 +1,46 @@
 using Godot;
 using System;
 
-public partial class Enemy : CharacterBody2D
+public partial class Enemy : CharacterBody2D, IHealth
 {
+	[ExportCategory("Stats")]
 	[Export]
 	private float speed = 200f;
 
+	[Export]
+	public int MaxHealth { get; private set; }
+	public float CurrHealth { get; private set; }
+
+	public override void _Ready()
+	{
+		MaxHealth = 300;
+		CurrHealth = MaxHealth;
+	}
+
+	public void TakeDamage (int amount)
+	{
+		CurrHealth -= amount;
+		if(CurrHealth <= 0)
+		{
+			Die();
+		}
+	}
+
+	public void Heal (int amount)
+	{
+		CurrHealth += amount;
+		if (CurrHealth > MaxHealth) { CurrHealth = MaxHealth; }
+	}
+
+	private void Die()
+	{
+		GD.Print("Enemy dead");
+		this.QueueFree();
+	}
+
 	public override void _PhysicsProcess(double delta)
 	{
+		TakeDamage(1);
 		LookTo();
 		this.Velocity = GetVelocity();
 		MoveAndSlide();
