@@ -1,24 +1,107 @@
-[gd_scene load_steps=5 format=3 uid="uid://4t2o30kevc0o"]
+[gd_scene load_steps=12 format=3 uid="uid://4t2o30kevc0o"]
 
 [ext_resource type="Texture2D" uid="uid://6ejhqw6gp5v6" path="res://Art/Top Down Swordsman.png" id="1_hbe7w"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerMove.cs" id="1_shvxo"]
+[ext_resource type="Script" path="res://Scripts/Player/PlayerCombat.cs" id="2_5o28a"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerLook.cs" id="2_lmrn6"]
+[ext_resource type="Texture2D" uid="uid://15v4hjsre6" path="res://Art/Top Down Swordsman attack.png" id="4_vlo0j"]
+[ext_resource type="Script" path="res://Scripts/Combat/HitBox.cs" id="5_jf0ox"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f47xg"]
 radius = 89.0505
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ejd48"]
+size = Vector2(20, 77)
+
+[sub_resource type="Animation" id="Animation_j8tbf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_hbe7w")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/HitBox/HitShape:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_7tve7"]
+resource_name = "basic attack"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("4_vlo0j"), ExtResource("1_hbe7w")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/HitBox/HitShape:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3oly5"]
+_data = {
+"RESET": SubResource("Animation_j8tbf"),
+"basic attack": SubResource("Animation_7tve7")
+}
+
 [node name="PlayerBody" type="CharacterBody2D"]
 script = ExtResource("1_shvxo")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="PlayerCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_f47xg")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-
-[node name="Node2D" type="Node2D" parent="."]
 script = ExtResource("2_lmrn6")
 
-[node name="Sprite2D" type="Sprite2D" parent="Node2D"]
+[node name="Sprite2D" type="Sprite2D" parent="PlayerCollision" node_paths=PackedStringArray("anim")]
 position = Vector2(65, 0)
 rotation = 1.5708
 texture = ExtResource("1_hbe7w")
+script = ExtResource("2_5o28a")
+MaxHealth = 100
+anim = NodePath("../AnimationPlayer")
+
+[node name="HitBox" type="Area2D" parent="PlayerCollision/Sprite2D"]
+collision_layer = 2
+script = ExtResource("5_jf0ox")
+damage = 5.0
+
+[node name="HitShape" type="CollisionShape2D" parent="PlayerCollision/Sprite2D/HitBox"]
+position = Vector2(-0.000318559, -92.5)
+shape = SubResource("RectangleShape2D_ejd48")
+disabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerCollision"]
+libraries = {
+"": SubResource("AnimationLibrary_3oly5")
+}
+
+[node name="Camera2D" type="Camera2D" parent="."]

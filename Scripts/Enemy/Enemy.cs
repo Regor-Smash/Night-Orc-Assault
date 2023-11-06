@@ -13,11 +13,14 @@ public partial class Enemy : CharacterBody2D, IHealth
 
 	public override void _Ready()
 	{
-		MaxHealth = 300;
+		if (MaxHealth <= 0)
+		{
+			GD.PrintErr("Enemy health must be greater than 0.");
+		}
 		CurrHealth = MaxHealth;
 	}
 
-	public void TakeDamage (int amount)
+	public void TakeDamage (float amount)
 	{
 		CurrHealth -= amount;
 		if(CurrHealth <= 0)
@@ -26,7 +29,7 @@ public partial class Enemy : CharacterBody2D, IHealth
 		}
 	}
 
-	public void Heal (int amount)
+	public void Heal (float amount)
 	{
 		CurrHealth += amount;
 		if (CurrHealth > MaxHealth) { CurrHealth = MaxHealth; }

@@ -1,14 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://bn33o2eu8bsdt"]
+[gd_scene load_steps=7 format=3 uid="uid://bn33o2eu8bsdt"]
 
 [ext_resource type="PackedScene" uid="uid://4t2o30kevc0o" path="res://Prefabs/Player.tscn" id="1_q6qud"]
 [ext_resource type="Texture2D" uid="uid://bgv7ytb2v5k2x" path="res://Art/Tropic Island Tileset_Collectable - Gem.png" id="2_fm6ps"]
 [ext_resource type="PackedScene" uid="uid://fm6sqxwohdnq" path="res://Prefabs/Star.tscn" id="3_6ln20"]
 [ext_resource type="PackedScene" uid="uid://baudm60nqyp86" path="res://Prefabs/Enemy1.tscn" id="4_8jbsj"]
+[ext_resource type="Script" path="res://Scripts/Combat/HurtBox.cs" id="4_yhgur"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mp0m3"]
+radius = 57.0351
 
 [node name="Node2D" type="Node2D"]
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_fm6ps")
 
 [node name="Enemy1" parent="." instance=ExtResource("4_8jbsj")]
 position = Vector2(692, -158)
@@ -21,3 +22,14 @@ position = Vector2(39, -231)
 
 [node name="StaticStar2" parent="." instance=ExtResource("3_6ln20")]
 position = Vector2(288, 256)
+
+[node name="GemHurt" type="Area2D" parent="."]
+collision_mask = 3
+script = ExtResource("4_yhgur")
+maxHealth = 10
+
+[node name="Sprite2D" type="Sprite2D" parent="GemHurt"]
+texture = ExtResource("2_fm6ps")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GemHurt"]
+shape = SubResource("CircleShape2D_mp0m3")
