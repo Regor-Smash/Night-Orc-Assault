@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 [GlobalClass]
 public partial class HitBox : Area2D
@@ -9,7 +8,7 @@ public partial class HitBox : Area2D
 
 	public override void _Ready()
 	{
-		this.AreaEntered += Hit;
+		this.BodyEntered += Hit; // detects PhysicsBody2D and TileMaps
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -17,9 +16,10 @@ public partial class HitBox : Area2D
 	{
 	}
 
-	private void Hit(Area2D area)
+	private void Hit(Node2D area)
 	{
-		HurtBox hurt = area as HurtBox;
+		GD.Print("Hit: " + area.Name);
+		IHealth hurt = area as IHealth;
 		if (hurt != null)
 		{
 			hurt.TakeDamage(damage);

@@ -23,10 +23,10 @@ position = Vector2(39, -231)
 [node name="StaticStar2" parent="." instance=ExtResource("3_6ln20")]
 position = Vector2(288, 256)
 
-[node name="GemHurt" type="Area2D" parent="."]
+[node name="GemHurt" type="StaticBody2D" parent="."]
 collision_mask = 3
 script = ExtResource("4_yhgur")
-maxHealth = 10
+MaxHealth = 20
 
 [node name="Sprite2D" type="Sprite2D" parent="GemHurt"]
 texture = ExtResource("2_fm6ps")

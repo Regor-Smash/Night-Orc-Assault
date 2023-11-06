@@ -1,16 +1,31 @@
-[gd_scene load_steps=4 format=3 uid="uid://baudm60nqyp86"]
+[gd_scene load_steps=6 format=3 uid="uid://baudm60nqyp86"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy/Enemy.cs" id="1_oypq3"]
 [ext_resource type="Texture2D" uid="uid://bdhqrtjpbca0b" path="res://Art/Tropic Island Tileset_Collectable - Golden Key.png" id="2_fh6bq"]
+[ext_resource type="Script" path="res://Scripts/Combat/HitBox.cs" id="3_ytttn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sqx56"]
 size = Vector2(112, 50)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vb7yj"]
+size = Vector2(27, 50)
+
 [node name="Enemy1" type="CharacterBody2D"]
+collision_mask = 3
 script = ExtResource("1_oypq3")
+MaxHealth = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_sqx56")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_fh6bq")
+
+[node name="HitBox" type="Area2D" parent="."]
+script = ExtResource("3_ytttn")
+damage = 3.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+position = Vector2(72.5, 0)
+shape = SubResource("RectangleShape2D_vb7yj")
+debug_color = Color(0.815686, 0.360784, 0.498039, 0.419608)

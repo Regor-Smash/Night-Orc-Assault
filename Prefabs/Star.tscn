@@ -1,11 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://fm6sqxwohdnq"]
+[gd_scene load_steps=4 format=3 uid="uid://fm6sqxwohdnq"]
 
 [ext_resource type="Texture2D" uid="uid://bfsr1yxbkts8p" path="res://Art/Tropic Island Tileset_Collectable - Star.png" id="1_b54c2"]
+[ext_resource type="Script" path="res://Scripts/Combat/HurtBox.cs" id="1_qq04c"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ov2sw"]
 radius = 59.0339
 
 [node name="StaticStar" type="StaticBody2D"]
+collision_mask = 3
+script = ExtResource("1_qq04c")
+MaxHealth = 5
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_b54c2")

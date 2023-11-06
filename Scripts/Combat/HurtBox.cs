@@ -1,20 +1,19 @@
 using Godot;
-using System;
 
 [GlobalClass]
-public partial class HurtBox : Area2D, IHealth
+public partial class HurtBox : StaticBody2D, IHealth
 {
 	[ExportCategory("HurtBox")]
 	[Export]
-	private int maxHealth;
-	public int MaxHealth { get { return maxHealth; } }
+	public int MaxHealth { get; private set; }
 	public float CurrHealth { get; private set; }
 
 	public override void _Ready()
 	{
 		if (MaxHealth <= 0)
 		{
-			GD.PrintErr(this.Name + " health must be greater than 0.");
+			GD.PrintErr(this.Name + " max health must be greater than 0.");
+			Die();
 		}
 		CurrHealth = MaxHealth;
 	}
@@ -25,15 +24,14 @@ public partial class HurtBox : Area2D, IHealth
 	}
 
 
-	public void TakeDamage(float damage)
+	public void TakeDamage(float amount)
 	{
-		if(damage <= 0)
+		if(amount <= 0)
 		{
 			GD.PrintErr("Damage must be for a positive amount.");
 			return;
 		}
-		GD.Print("OW");
-		CurrHealth -= damage;
+		CurrHealth -= amount;
 
 		if(CurrHealth <= 0)
 		{

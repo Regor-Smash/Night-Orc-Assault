@@ -1,9 +1,8 @@
 using Godot;
-using System;
 
 public partial class Enemy : CharacterBody2D, IHealth
 {
-	[ExportCategory("Stats")]
+	[ExportCategory("Enemy Stats")]
 	[Export]
 	private float speed = 200f;
 
@@ -15,13 +14,20 @@ public partial class Enemy : CharacterBody2D, IHealth
 	{
 		if (MaxHealth <= 0)
 		{
-			GD.PrintErr("Enemy health must be greater than 0.");
+			GD.PrintErr(this.Name + " max health must be greater than 0.");
+			Die();
 		}
 		CurrHealth = MaxHealth;
 	}
 
 	public void TakeDamage (float amount)
 	{
+		if (amount <= 0)
+		{
+			GD.PrintErr("Damage must be for a positive amount.");
+			return;
+		}
+
 		CurrHealth -= amount;
 		if(CurrHealth <= 0)
 		{
@@ -31,8 +37,12 @@ public partial class Enemy : CharacterBody2D, IHealth
 
 	public void Heal (float amount)
 	{
-		CurrHealth += amount;
-		if (CurrHealth > MaxHealth) { CurrHealth = MaxHealth; }
+		if (amount <= 0)
+		{
+			GD.PrintErr("Healing must be for a positive amount.");
+			return;
+		}
+		CurrHealth = Mathf.Clamp(CurrHealth + amount, 0f, MaxHealth);
 	}
 
 	private void Die()
@@ -43,7 +53,6 @@ public partial class Enemy : CharacterBody2D, IHealth
 
 	public override void _PhysicsProcess(double delta)
 	{
-		TakeDamage(1);
 		LookTo();
 		this.Velocity = GetVelocity();
 		MoveAndSlide();
@@ -51,7 +60,7 @@ public partial class Enemy : CharacterBody2D, IHealth
 
 	private void LookTo()
 	{
-		Vector2 playerPos = PlayerMove.Instance.Position;
+		Vector2 playerPos = PlayerCharacter.Instance.Position;
 
 		this.LookAt(playerPos);
 	}
@@ -59,7 +68,7 @@ public partial class Enemy : CharacterBody2D, IHealth
 	private Vector2 GetVelocity()
 	{
 		//Move directly toward player
-		Vector2 playerPos = PlayerMove.Instance.Position;
+		Vector2 playerPos = PlayerCharacter.Instance.Position;
 		Vector2 newVelocity = (playerPos - this.Position).Normalized() * speed;
 
 		return newVelocity;
