@@ -5,6 +5,8 @@ public partial class EnemyCharacter : CharacterBody2D, IHealth
 	[ExportCategory("Enemy Stats")]
 	[Export]
 	private float speed = 200f;
+	[Export]
+	private int payout = 5;
 
 	[Export]
 	public int MaxHealth { get; private set; }
@@ -50,6 +52,7 @@ public partial class EnemyCharacter : CharacterBody2D, IHealth
 	private void Die()
 	{
 		GD.Print("Enemy dead");
+		PlayerInventory.GetPaid(payout);
 		this.QueueFree();
 	}
 
