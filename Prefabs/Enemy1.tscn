@@ -1,31 +1,134 @@
-[gd_scene load_steps=6 format=3 uid="uid://baudm60nqyp86"]
+[gd_scene load_steps=11 format=3 uid="uid://baudm60nqyp86"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy/Enemy.cs" id="1_oypq3"]
 [ext_resource type="Texture2D" uid="uid://bdhqrtjpbca0b" path="res://Art/Tropic Island Tileset_Collectable - Golden Key.png" id="2_fh6bq"]
 [ext_resource type="Script" path="res://Scripts/Combat/HitBox.cs" id="3_ytttn"]
+[ext_resource type="Script" path="res://Scripts/Enemy/EnemyAttack.cs" id="4_702dh"]
+
+[sub_resource type="Animation" id="Animation_10ghc"]
+resource_name = "Attack"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemyHitBox/HitShape:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:flip_v")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EnemyRange/RangeShape:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_36f8i"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("EnemyHitBox/HitShape:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:flip_v")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EnemyRange/RangeShape:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6vxpo"]
+_data = {
+"Attack": SubResource("Animation_10ghc"),
+"RESET": SubResource("Animation_36f8i")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sqx56"]
 size = Vector2(112, 50)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vb7yj"]
-size = Vector2(27, 50)
+size = Vector2(27, 62)
 
-[node name="Enemy1" type="CharacterBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3qw8c"]
+size = Vector2(16, 49)
+
+[node name="EnemyBody" type="CharacterBody2D"]
 collision_mask = 3
 script = ExtResource("1_oypq3")
 MaxHealth = 10
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_6vxpo")
+}
+
+[node name="EnemyCollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_sqx56")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_fh6bq")
 
-[node name="HitBox" type="Area2D" parent="."]
+[node name="EnemyHitBox" type="Area2D" parent="."]
 script = ExtResource("3_ytttn")
 damage = 3.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+[node name="HitShape" type="CollisionShape2D" parent="EnemyHitBox"]
 position = Vector2(72.5, 0)
 shape = SubResource("RectangleShape2D_vb7yj")
+disabled = true
 debug_color = Color(0.815686, 0.360784, 0.498039, 0.419608)
+
+[node name="EnemyRange" type="Area2D" parent="." node_paths=PackedStringArray("anim")]
+script = ExtResource("4_702dh")
+anim = NodePath("../AnimationPlayer")
+
+[node name="RangeShape" type="CollisionShape2D" parent="EnemyRange"]
+position = Vector2(67, 0.5)
+shape = SubResource("RectangleShape2D_3qw8c")

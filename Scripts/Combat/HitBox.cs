@@ -18,7 +18,7 @@ public partial class HitBox : Area2D
 
 	private void Hit(Node2D area)
 	{
-		GD.Print("Hit: " + area.Name);
+		GD.Print(this.Name + " hit: " + area.Name);
 		IHealth hurt = area as IHealth;
 		if (hurt != null)
 		{

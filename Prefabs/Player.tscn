@@ -6,12 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://15v4hjsre6" path="res://Art/Top Down Swordsman attack.png" id="4_vlo0j"]
 [ext_resource type="Script" path="res://Scripts/Combat/HitBox.cs" id="5_jf0ox"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_f47xg"]
-radius = 89.0505
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ejd48"]
-size = Vector2(20, 77)
-
 [sub_resource type="Animation" id="Animation_j8tbf"]
 length = 0.001
 tracks/0/type = "value"
@@ -29,7 +23,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D/HitBox/HitShape:disabled")
+tracks/1/path = NodePath("Sprite2D/SwordHitBox/HitShape:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -57,7 +51,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D/HitBox/HitShape:disabled")
+tracks/1/path = NodePath("Sprite2D/SwordHitBox/HitShape:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -73,6 +67,12 @@ _data = {
 "basic attack": SubResource("Animation_7tve7")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_f47xg"]
+radius = 89.0505
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ejd48"]
+size = Vector2(20, 77)
+
 [node name="PlayerBody" type="CharacterBody2D" node_paths=PackedStringArray("anim")]
 motion_mode = 1
 script = ExtResource("1_n0usl")
@@ -80,29 +80,29 @@ speed = 500.0
 MaxHealth = 50
 anim = NodePath("AnimationPlayer")
 
-[node name="PlayerCollision" type="CollisionShape2D" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../PlayerCollisionShape")
+libraries = {
+"": SubResource("AnimationLibrary_3oly5")
+}
+
+[node name="PlayerCollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_f47xg")
 script = ExtResource("2_lmrn6")
 
-[node name="Sprite2D" type="Sprite2D" parent="PlayerCollision"]
+[node name="Sprite2D" type="Sprite2D" parent="PlayerCollisionShape"]
 position = Vector2(65, 0)
 rotation = 1.5708
 texture = ExtResource("1_hbe7w")
 
-[node name="HitBox" type="Area2D" parent="PlayerCollision/Sprite2D"]
+[node name="SwordHitBox" type="Area2D" parent="PlayerCollisionShape/Sprite2D"]
 collision_layer = 2
 script = ExtResource("5_jf0ox")
 damage = 5.0
 
-[node name="HitShape" type="CollisionShape2D" parent="PlayerCollision/Sprite2D/HitBox"]
+[node name="HitShape" type="CollisionShape2D" parent="PlayerCollisionShape/Sprite2D/SwordHitBox"]
 position = Vector2(-0.000318559, -92.5)
 shape = SubResource("RectangleShape2D_ejd48")
 disabled = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-root_node = NodePath("../PlayerCollision")
-libraries = {
-"": SubResource("AnimationLibrary_3oly5")
-}
 
 [node name="Camera2D" type="Camera2D" parent="."]

@@ -10,6 +10,8 @@ public partial class Enemy : CharacterBody2D, IHealth
 	public int MaxHealth { get; private set; }
 	public float CurrHealth { get; private set; }
 
+	private Vector2 PlayerPosition { get { return PlayerCharacter.Instance.Position; } }
+
 	public override void _Ready()
 	{
 		if (MaxHealth <= 0)
@@ -60,7 +62,7 @@ public partial class Enemy : CharacterBody2D, IHealth
 
 	private void LookTo()
 	{
-		Vector2 playerPos = PlayerCharacter.Instance.Position;
+		Vector2 playerPos = PlayerPosition;
 
 		this.LookAt(playerPos);
 	}
@@ -68,7 +70,7 @@ public partial class Enemy : CharacterBody2D, IHealth
 	private Vector2 GetVelocity()
 	{
 		//Move directly toward player
-		Vector2 playerPos = PlayerCharacter.Instance.Position;
+		Vector2 playerPos = PlayerPosition;
 		Vector2 newVelocity = (playerPos - this.Position).Normalized() * speed;
 
 		return newVelocity;
