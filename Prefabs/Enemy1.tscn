@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://baudm60nqyp86"]
 
-[ext_resource type="Script" path="res://Scripts/Enemy/Enemy.cs" id="1_oypq3"]
+[ext_resource type="Script" path="res://Scripts/Enemy/EnemyCharacter.cs" id="1_5hfh5"]
 [ext_resource type="Texture2D" uid="uid://bdhqrtjpbca0b" path="res://Art/Tropic Island Tileset_Collectable - Golden Key.png" id="2_fh6bq"]
 [ext_resource type="Script" path="res://Scripts/Combat/HitBox.cs" id="3_ytttn"]
 [ext_resource type="Script" path="res://Scripts/Enemy/EnemyAttack.cs" id="4_702dh"]
@@ -101,7 +101,7 @@ size = Vector2(16, 49)
 
 [node name="EnemyBody" type="CharacterBody2D"]
 collision_mask = 3
-script = ExtResource("1_oypq3")
+script = ExtResource("1_5hfh5")
 MaxHealth = 10
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

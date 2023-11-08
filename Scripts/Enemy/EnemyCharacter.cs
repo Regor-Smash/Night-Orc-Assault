@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class Enemy : CharacterBody2D, IHealth
+public partial class EnemyCharacter : CharacterBody2D, IHealth
 {
 	[ExportCategory("Enemy Stats")]
 	[Export]
@@ -10,7 +10,7 @@ public partial class Enemy : CharacterBody2D, IHealth
 	public int MaxHealth { get; private set; }
 	public float CurrHealth { get; private set; }
 
-	private Vector2 PlayerPosition { get { return PlayerCharacter.Instance.Position; } }
+	private Vector2 PlayerPosition { get { return PlayerCharacter.Instance.GlobalPosition; } }
 
 	public override void _Ready()
 	{
@@ -71,7 +71,7 @@ public partial class Enemy : CharacterBody2D, IHealth
 	{
 		//Move directly toward player
 		Vector2 playerPos = PlayerPosition;
-		Vector2 newVelocity = (playerPos - this.Position).Normalized() * speed;
+		Vector2 newVelocity = (playerPos - this.GlobalPosition).Normalized() * speed;
 
 		return newVelocity;
 	}
