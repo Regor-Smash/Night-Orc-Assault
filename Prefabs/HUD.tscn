@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://bcbq8bjie3oms"]
+
+[ext_resource type="Texture2D" uid="uid://b4f1i4l5vqp7d" path="res://Art/Placeholders/PH Bordered Square.png" id="1_arlug"]
+[ext_resource type="Script" path="res://Scripts/UI/HealthBar.cs" id="1_c32gw"]
+[ext_resource type="Texture2D" uid="uid://c2sre2nq6gh7g" path="res://Art/Placeholders/PH Square.png" id="2_sc833"]
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HealthProgressBar" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_right = 284.0
+offset_bottom = 51.0
+value = 17.0
+nine_patch_stretch = true
+texture_under = ExtResource("1_arlug")
+texture_progress = ExtResource("2_sc833")
+tint_under = Color(0.580392, 0, 0, 1)
+tint_progress = Color(1, 0, 0, 1)
+script = ExtResource("1_c32gw")
