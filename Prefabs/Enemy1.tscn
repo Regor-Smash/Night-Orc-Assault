@@ -108,6 +108,8 @@ MaxHealth = 10
 [node name="EnemyCollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_sqx56")
 
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_6vxpo")

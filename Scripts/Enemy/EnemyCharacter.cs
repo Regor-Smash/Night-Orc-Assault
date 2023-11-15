@@ -13,6 +13,7 @@ public partial class EnemyCharacter : CharacterBody2D, IHealth
 	public float CurrHealth { get; private set; }
 
 	private Vector2 PlayerPosition { get { return PlayerCharacter.Instance.GlobalPosition; } }
+	private NavigationAgent2D navAgent;
 
 	public override void _Ready()
 	{
@@ -22,6 +23,13 @@ public partial class EnemyCharacter : CharacterBody2D, IHealth
 			Die();
 		}
 		CurrHealth = MaxHealth;
+
+		int agentInd = 1;
+		navAgent = GetChild<NavigationAgent2D>(agentInd);
+		if(navAgent == null)
+		{
+			GD.PrintErr("NavAgent not found on '" + this.Name + "', did you move it from index " + agentInd + "?");
+		}
 	}
 
 	public void TakeDamage (float amount)
@@ -59,23 +67,21 @@ public partial class EnemyCharacter : CharacterBody2D, IHealth
 
 	public override void _PhysicsProcess(double delta)
 	{
-		LookTo();
-		this.Velocity = GetVelocity();
+		navAgent.TargetPosition = PlayerPosition;
+		Vector2 nextPos = navAgent.GetNextPathPosition();
+		LookTo(nextPos);
+		this.Velocity = GetVelocity(nextPos);
 		MoveAndSlide();
 	}
 
-	private void LookTo()
+	protected void LookTo(Vector2 pos)
 	{
-		Vector2 playerPos = PlayerPosition;
-
-		this.LookAt(playerPos);
+		this.LookAt(pos);
 	}
 
-	private Vector2 GetVelocity()
+	private Vector2 GetVelocity(Vector2 targetPos)
 	{
-		//Move directly toward player
-		Vector2 playerPos = PlayerPosition;
-		Vector2 newVelocity = (playerPos - this.GlobalPosition).Normalized() * speed;
+		Vector2 newVelocity = (targetPos - this.GlobalPosition).Normalized() * speed;
 
 		return newVelocity;
 	}
