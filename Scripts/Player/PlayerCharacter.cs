@@ -33,6 +33,7 @@ public partial class PlayerCharacter : CharacterBody2D, IHealth
 			GD.PrintErr("Player health must be greater than 0.");
 		}
 		CurrHealth = MaxHealth;
+		WaveManager.EndWave += WaveHeal;
 
 		//Animation
 		if (!IsInstanceValid(anim))
@@ -66,6 +67,11 @@ public partial class PlayerCharacter : CharacterBody2D, IHealth
 		}
 
 		CurrHealth = Mathf.Clamp(CurrHealth + amount, 0f, MaxHealth);
+	}
+
+	private void WaveHeal (int wave)
+	{
+		Heal(10000);
 	}
 
 	public float GetHealthPercent()

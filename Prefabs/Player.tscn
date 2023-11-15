@@ -74,6 +74,8 @@ radius = 89.0505
 size = Vector2(20, 77)
 
 [node name="PlayerBody" type="CharacterBody2D" node_paths=PackedStringArray("anim")]
+collision_layer = 2
+collision_mask = 7
 motion_mode = 1
 script = ExtResource("1_n0usl")
 speed = 500.0
@@ -97,6 +99,7 @@ texture = ExtResource("1_hbe7w")
 
 [node name="SwordHitBox" type="Area2D" parent="PlayerCollisionShape/Sprite2D"]
 collision_layer = 2
+collision_mask = 4
 script = ExtResource("5_jf0ox")
 damage = 5.0
 

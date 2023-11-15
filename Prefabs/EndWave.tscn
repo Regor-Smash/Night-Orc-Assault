@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://c4egitvo71r6r"]
+
+[ext_resource type="Script" path="res://Scripts/UI/EndWaveScreen.cs" id="1_gyv6h"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1avyn"]
+font_size = 120
+
+[node name="EndWaveControl" type="Control" node_paths=PackedStringArray("continueButton")]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gyv6h")
+continueButton = NodePath("ContinueButton")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.678431, 0, 0.466667, 1)
+
+[node name="Label" type="Label" parent="."]
+offset_left = 228.0
+offset_top = 95.0
+offset_right = 942.0
+offset_bottom = 263.0
+text = "End of Wave"
+label_settings = SubResource("LabelSettings_1avyn")
+
+[node name="ContinueButton" type="Button" parent="."]
+offset_left = 520.0
+offset_top = 438.0
+offset_right = 599.0
+offset_bottom = 469.0
+text = "Continue"
