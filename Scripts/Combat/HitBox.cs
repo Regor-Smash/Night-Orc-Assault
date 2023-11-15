@@ -11,14 +11,9 @@ public partial class HitBox : Area2D
 		this.BodyEntered += Hit; // detects PhysicsBody2D and TileMaps
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
 	private void Hit(Node2D area)
 	{
-		GD.Print(this.Name + " hit: " + area.Name);
+		//GD.Print(this.Name + " hit: " + area.Name);
 		IHealth hurt = area as IHealth;
 		if (hurt != null)
 		{

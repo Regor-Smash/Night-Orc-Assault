@@ -51,7 +51,6 @@ public partial class PlayerCharacter : CharacterBody2D, IHealth
 		}
 
 		CurrHealth -= amount;
-		GD.Print("Player took damage.");
 		if (CurrHealth <= 0)
 		{
 			Die();
@@ -95,7 +94,6 @@ public partial class PlayerCharacter : CharacterBody2D, IHealth
 		{
 			//If moving, set velocity
 			newVelocity = direction * speed;
-			//GD.Print(direction + " * " + speed + " = " + newVelocity);
 		}
 
 		this.Velocity = newVelocity;
@@ -112,7 +110,6 @@ public partial class PlayerCharacter : CharacterBody2D, IHealth
 
 	private void Attack()
 	{
-		GD.Print("Player attacked");
 		anim.Play(name: "basic attack");
 	}
 

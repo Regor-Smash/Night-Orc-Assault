@@ -27,6 +27,6 @@ public partial class EnemySpawner : Node2D
 	{
 		Node enemyNode = enemyScene.Instantiate();
 		this.AddChild(enemyNode);
-		GD.Print("SPAWNED AN ENEMY");
+		//GD.Print("SPAWNED AN ENEMY");
 	}
 }

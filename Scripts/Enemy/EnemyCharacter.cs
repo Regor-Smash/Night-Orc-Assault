@@ -59,7 +59,7 @@ public partial class EnemyCharacter : CharacterBody2D, IHealth
 
 	private void Die()
 	{
-		GD.Print("Enemy dead");
+		//GD.Print("Enemy dead");
 		PlayerInventory.GetPaid(payout);
 		WaveManager.EnemyKilled();
 		this.QueueFree();

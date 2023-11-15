@@ -18,12 +18,6 @@ public partial class HurtBox : StaticBody2D, IHealth
 		CurrHealth = MaxHealth;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
-
-
 	public void TakeDamage(float amount)
 	{
 		if(amount <= 0)
@@ -51,7 +45,7 @@ public partial class HurtBox : StaticBody2D, IHealth
 
 	private void Die()
 	{
-		GD.Print(this.Name + " dead");
+		//GD.Print(this.Name + " dead");
 		this.QueueFree();
 	}
 }
